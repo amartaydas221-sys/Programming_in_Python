@@ -1,0 +1,137 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Family Management | Flood Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<header>
+    <h1>Flood Management System</h1>
+    <nav>
+        <a href="/">Dashboard</a>
+        <a href="/families">Families</a>
+        <a href="/inventory">Inventory</a>
+        <a href="/shelters">Shelters</a>
+        <a href="/distribution">Distribution</a>
+        <a href="/reports">Reports</a>
+    </nav>
+</header>
+
+<main>
+    <h2>Family Management</h2>
+
+    {% for category, message in get_flashed_messages(with_categories=true) %}
+        <p class="message {{ category }}">{{ message }}</p>
+    {% endfor %}
+
+    <section class="card">
+        <h3>Register Affected Family</h3>
+
+        <form method="POST" action="{{ url_for('families_page') }}">
+            <label>Family ID</label>
+            <input type="text" name="familyId" required>
+
+            <label>Head of Family</label>
+            <input type="text" name="headName" required>
+
+            <label>Phone Number (11 digits)</label>
+            <input type="tel" name="phone" pattern="[0-9]{11}" maxlength="11" required>
+
+            <label>District</label>
+            <input type="text" name="district" required>
+
+            <label>Upazila</label>
+            <input type="text" name="upazila" required>
+
+            <label>Village</label>
+            <input type="text" name="village" required>
+
+            <label>Total Family Members</label>
+            <input type="number" name="members" min="1" required>
+
+            <label>Children</label>
+            <input type="number" name="children" min="0" value="0" required>
+
+            <label>Elderly Members</label>
+            <input type="number" name="elderly" min="0" value="0" required>
+
+            <label>Members with Disabilities</label>
+            <input type="number" name="disabledMembers" min="0" value="0" required>
+
+            <label>Damage Level</label>
+            <select name="damageLevel" required>
+                <option value="Low">Low</option>
+                <option value="Medium">Medium</option>
+                <option value="High">High</option>
+                <option value="Extreme">Extreme</option>
+            </select>
+
+            <label>Does the family need shelter?</label>
+            <select name="shelterNeeded" required>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+            </select>
+
+            <button type="submit">Register Family</button>
+        </form>
+    </section>
+
+    <section class="card">
+        <h3>Registered Families</h3>
+
+        <form method="GET" action="{{ url_for('families_page') }}">
+            <input type="text" name="q" value="{{ query }}"
+                   placeholder="Search by ID, name, phone, or district">
+            <button type="submit">Search</button>
+            <a href="{{ url_for('families_page') }}">Show All</a>
+        </form>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Family ID</th>
+                        <th>Head of Family</th>
+                        <th>Phone</th>
+                        <th>District</th>
+                        <th>Members</th>
+                        <th>Damage</th>
+                        <th>Relief Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for family in families %}
+                    <tr>
+                        <td>{{ family.familyId }}</td>
+                        <td>{{ family.headName }}</td>
+                        <td>{{ family.phone }}</td>
+                        <td>{{ family.district }}</td>
+                        <td>{{ family.members }}</td>
+                        <td>{{ family.damageLevel }}</td>
+                        <td>
+                            {{ "Received" if family.receivedRelief else "Waiting" }}
+                        </td>
+                        <td>
+                            <form method="POST"
+                                  action="{{ url_for('delete_family', family_id=family.familyId) }}"
+                                  onsubmit="return confirm('Delete this family record?');">
+                                <button type="submit" class="danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="8">No family records found.</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+</body>
+</html>

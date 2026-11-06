@@ -1,0 +1,66 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Flood Management System</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+    <header>
+        <h1>Flood Management System</h1>
+        <p>Relief, Inventory and Shelter Management</p>
+    </header>
+
+    <main>
+        <section class="dashboard">
+            <h2>Welcome to the Dashboard</h2>
+
+            <div class="cards">
+                <div class="card">
+                    <h3>Family Management</h3>
+                    <p>Register and manage affected families.</p>
+                    <button onclick="showMessage('Family Management')">
+                        Open
+                    </button>
+                </div>
+
+                <div class="card">
+                    <h3>Inventory Management</h3>
+                    <p>Monitor available relief supplies.</p>
+                    <button onclick="showMessage('Inventory Management')">
+                        Open
+                    </button>
+                </div>
+
+                <div class="card">
+                    <h3>Shelter Management</h3>
+                    <p>Manage shelters and their capacity.</p>
+                    <button onclick="showMessage('Shelter Management')">
+                        Open
+                    </button>
+                </div>
+
+                <div class="card">
+                    <h3>Relief Distribution</h3>
+                    <p>Manage relief distribution records.</p>
+                    <button onclick="showMessage('Relief Distribution')">
+                        Open
+                    </button>
+                </div>
+            </div>
+
+            <p id="message"></p>
+        </section>
+    </main>
+
+    <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+</body>
+</html>

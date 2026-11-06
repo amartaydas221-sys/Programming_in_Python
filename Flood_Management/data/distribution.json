@@ -1,0 +1,109 @@
+[
+    {
+        "distributionId": "D001",
+        "date": "2026-11-23",
+        "familyId": "F001",
+        "headName": "Amartay Das",
+        "package": "Large",
+        "items": [
+            {
+                "itemName": "Rice",
+                "quantity": 20,
+                "unit": "kg"
+            },
+            {
+                "itemName": "Water",
+                "quantity": 24,
+                "unit": "bottle"
+            },
+            {
+                "itemName": "Blanket",
+                "quantity": 5,
+                "unit": "piece"
+            },
+            {
+                "itemName": "Medicine",
+                "quantity": 2,
+                "unit": "box"
+            },
+            {
+                "itemName": "Baby Food",
+                "quantity": 3,
+                "unit": "packet"
+            },
+            {
+                "itemName": "Hygiene Kit",
+                "quantity": 2,
+                "unit": "kit"
+            }
+        ]
+    },
+    {
+        "distributionId": "D002",
+        "date": "2026-11-23",
+        "familyId": "F002",
+        "headName": "Nazia Islam",
+        "package": "Medium",
+        "items": [
+            {
+                "itemName": "Rice",
+                "quantity": 10,
+                "unit": "kg"
+            },
+            {
+                "itemName": "Water",
+                "quantity": 12,
+                "unit": "bottle"
+            },
+            {
+                "itemName": "Blanket",
+                "quantity": 2,
+                "unit": "piece"
+            },
+            {
+                "itemName": "Medicine",
+                "quantity": 1,
+                "unit": "box"
+            }
+        ]
+    },
+    {
+        "distributionId": "D003",
+        "date": "2026-11-25",
+        "familyId": "F003",
+        "headName": "jakia Sultana",
+        "package": "Large",
+        "items": [
+            {
+                "itemName": "Rice",
+                "quantity": 20,
+                "unit": "kg"
+            },
+            {
+                "itemName": "Water",
+                "quantity": 24,
+                "unit": "bottle"
+            },
+            {
+                "itemName": "Blanket",
+                "quantity": 5,
+                "unit": "piece"
+            },
+            {
+                "itemName": "Medicine",
+                "quantity": 2,
+                "unit": "box"
+            },
+            {
+                "itemName": "Baby Food",
+                "quantity": 3,
+                "unit": "packet"
+            },
+            {
+                "itemName": "Hygiene Kit",
+                "quantity": 2,
+                "unit": "kit"
+            }
+        ]
+    }
+]

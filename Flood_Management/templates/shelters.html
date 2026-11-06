@@ -1,0 +1,144 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shelter Management | Flood Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<header>
+    <h1>Flood Management System</h1>
+    <nav>
+        <a href="/">Dashboard</a>
+        <a href="/families">Families</a>
+        <a href="/inventory">Inventory</a>
+        <a href="/shelters">Shelters</a>
+        <a href="/distribution">Distribution</a>
+        <a href="/reports">Reports</a>
+    </nav>
+</header>
+
+<main>
+    <h2>Shelter Management</h2>
+
+    {% for category, message in get_flashed_messages(with_categories=true) %}
+        <p class="message {{ category }}">{{ message }}</p>
+    {% endfor %}
+
+    <section class="card">
+        <h3>Add Shelter</h3>
+
+        <form method="POST" action="{{ url_for('shelters_page') }}">
+            <label>Shelter ID</label>
+            <input type="number" name="shelterId" min="1" required>
+
+            <label>Shelter Name</label>
+            <input type="text" name="shelterName" required>
+
+            <label>District</label>
+            <input type="text" name="district" required>
+
+            <label>Total Capacity</label>
+            <input type="number" name="capacity" min="0" required>
+
+            <button type="submit">Add Shelter</button>
+        </form>
+    </section>
+
+    <section class="card">
+        <h3>Registered Shelters</h3>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Shelter Name</th>
+                        <th>District</th>
+                        <th>Capacity</th>
+                        <th>Occupancy</th>
+                        <th>Available Places</th>
+                        <th>Update</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for shelter in shelters %}
+                    <tr>
+                        <td>{{ shelter.shelterId }}</td>
+                        <td>{{ shelter.shelterName }}</td>
+                        <td>{{ shelter.district }}</td>
+                        <td>{{ shelter.capacity }}</td>
+                        <td>{{ shelter.currentOccupancy }}</td>
+                        <td>
+                            {{ shelter.capacity - shelter.currentOccupancy }}
+                        </td>
+                        <td>
+                            <form method="POST"
+                                  action="{{ url_for('edit_shelter', shelter_id=shelter.shelterId) }}">
+                                <input type="text" name="shelterName"
+                                       value="{{ shelter.shelterName }}" required>
+
+                                <input type="text" name="district"
+                                       value="{{ shelter.district }}" required>
+
+                                <input type="number" name="capacity"
+                                       min="0" value="{{ shelter.capacity }}" required>
+
+                                <button type="submit">Update</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form method="POST"
+                                  action="{{ url_for('delete_shelter', shelter_id=shelter.shelterId) }}"
+                                  onsubmit="return confirm('Delete this shelter?');">
+                                <button type="submit" class="danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="8">No shelters registered yet.</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="card">
+        <h3>Registered Families</h3>
+        <p>This section shows families currently stored in the system.</p>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Family ID</th>
+                        <th>Family Head</th>
+                        <th>District</th>
+                        <th>Shelter Needed</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for family in families %}
+                    <tr>
+                        <td>{{ family.familyId }}</td>
+                        <td>{{ family.headName }}</td>
+                        <td>{{ family.district }}</td>
+                        <td>{{ "Yes" if family.shelterNeeded else "No" }}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4">No families registered.</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Relief Distribution | Flood Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<header>
+    <h1>Flood Management System</h1>
+    <nav>
+        <a href="/">Dashboard</a>
+        <a href="/families">Families</a>
+        <a href="/inventory">Inventory</a>
+        <a href="/shelters">Shelters</a>
+        <a href="/distribution">Distribution</a>
+        <a href="/reports">Reports</a>
+    </nav>
+</header>
+
+<main>
+    <h2>Relief Distribution</h2>
+
+    {% for category, message in get_flashed_messages(with_categories=true) %}
+        <p class="message {{ category }}">{{ message }}</p>
+    {% endfor %}
+
+    <section class="card">
+        <h3>Distribute Relief Package</h3>
+
+        <p>
+            The system selects the relief package according to the family's
+            recorded damage level.
+        </p>
+
+        <form method="POST" action="{{ url_for('distribution_page') }}">
+            <label>Select Eligible Family</label>
+
+            <select name="familyId" required>
+                <option value="">-- Select Family --</option>
+
+                {% for family in families %}
+                    <option value="{{ family.familyId }}">
+                        {{ family.familyId }} -
+                        {{ family.headName }} -
+                        {{ family.damageLevel }} Damage
+                    </option>
+                {% else %}
+                    <option value="" disabled>
+                        No eligible families available
+                    </option>
+                {% endfor %}
+            </select>
+
+            <button type="submit" {% if not families %}disabled{% endif %}>
+                Distribute Relief
+            </button>
+        </form>
+    </section>
+
+    <section class="card">
+        <h3>Distribution History</h3>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Distribution ID</th>
+                        <th>Date</th>
+                        <th>Family ID</th>
+                        <th>Family Head</th>
+                        <th>Package</th>
+                        <th>Items Distributed</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for record in history %}
+                    <tr>
+                        <td>{{ record.distributionId }}</td>
+                        <td>{{ record.date }}</td>
+                        <td>{{ record.familyId }}</td>
+                        <td>{{ record.headName }}</td>
+                        <td>{{ record.package }}</td>
+                        <td>
+                            {% for item in record["items"] %}
+                                {{ item.itemName }}:
+                                {{ item.quantity }} {{ item.unit }}
+                                {% if not loop.last %}<br>{% endif %}
+                            {% endfor %}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="6">No distributions recorded yet.</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+</body>
+</html>

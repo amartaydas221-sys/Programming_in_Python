@@ -1,0 +1,117 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory | Flood Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<header>
+    <h1>Flood Management System</h1>
+    <nav>
+        <a href="/">Dashboard</a>
+        <a href="/families">Families</a>
+        <a href="/inventory">Inventory</a>
+        <a href="/shelters">Shelters</a>
+        <a href="/distribution">Distribution</a>
+        <a href="/reports">Reports</a>
+    </nav>
+</header>
+
+<main>
+    <h2>Relief Inventory Management</h2>
+
+    {% for category, message in get_flashed_messages(with_categories=true) %}
+        <p class="message {{ category }}">{{ message }}</p>
+    {% endfor %}
+
+    <section class="card">
+        <h3>Add New Item</h3>
+
+        <form method="POST" action="{{ url_for('inventory_page') }}">
+            <label>Item ID</label>
+            <input type="text" name="itemId" required>
+
+            <label>Item Name</label>
+            <input type="text" name="itemName" required>
+
+            <label>Quantity</label>
+            <input type="number" name="quantity" min="0" required>
+
+            <label>Unit</label>
+            <input type="text" name="unit"
+                   placeholder="kg, packets, bottles, pieces" required>
+
+            <label>Minimum Stock Level</label>
+            <input type="number" name="minimumStock" min="0" required>
+
+            <button type="submit">Add Item</button>
+        </form>
+    </section>
+
+    <section class="card">
+        <h3>Available Inventory</h3>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item ID</th>
+                        <th>Item Name</th>
+                        <th>Quantity</th>
+                        <th>Unit</th>
+                        <th>Minimum Stock</th>
+                        <th>Status</th>
+                        <th>Update Stock</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for item in inventory %}
+                    <tr>
+                        <td>{{ item.itemId }}</td>
+                        <td>{{ item.itemName }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.unit }}</td>
+                        <td>{{ item.minimumStock }}</td>
+                        <td>
+                            {% if item.quantity <= item.minimumStock %}
+                                <span class="low-stock">Low Stock</span>
+                            {% else %}
+                                <span class="available">Available</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <form method="POST"
+                                  action="{{ url_for('update_inventory', item_id=item.itemId) }}">
+                                <input type="number" name="quantity"
+                                       min="0" value="{{ item.quantity }}" required>
+
+                                <input type="number" name="minimumStock"
+                                       min="0" value="{{ item.minimumStock }}" required>
+
+                                <button type="submit">Update</button>
+                            </form>
+                        </td>
+                        <td>
+                            <form method="POST"
+                                  action="{{ url_for('delete_inventory', item_id=item.itemId) }}"
+                                  onsubmit="return confirm('Delete this item?');">
+                                <button type="submit" class="danger">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="8">No inventory items found.</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,34 @@
+[
+    {
+        "shelterId": 1,
+        "shelterName": "Civil",
+        "district": "Dhaka",
+        "capacity": 500,
+        "currentOccupancy": 209,
+        "families": [
+            "F001",
+            "F002"
+        ]
+    },
+    {
+        "shelterId": 3,
+        "shelterName": "Dokkhin Nowa Para",
+        "district": "chittagong",
+        "capacity": 400,
+        "currentOccupancy": 0
+    },
+    {
+        "shelterId": 21,
+        "shelterName": "Aftabnagar",
+        "district": "Dhaka",
+        "capacity": 10,
+        "currentOccupancy": 0
+    },
+    {
+        "shelterId": 100,
+        "shelterName": "NakhalPara",
+        "district": "Dhaka",
+        "capacity": 1000,
+        "currentOccupancy": 500
+    }
+]

@@ -1,0 +1,181 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports | Flood Management</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+<header>
+    <h1>Flood Management System</h1>
+    <nav>
+        <a href="/">Dashboard</a>
+        <a href="/families">Families</a>
+        <a href="/inventory">Inventory</a>
+        <a href="/shelters">Shelters</a>
+        <a href="/distribution">Distribution</a>
+        <a href="/reports">Reports</a>
+    </nav>
+</header>
+
+<main>
+    <h2>Management Reports</h2>
+
+    <section class="stats">
+        <div class="card">
+            <h3>Total Families</h3>
+            <p class="number">{{ families | length }}</p>
+        </div>
+
+        <div class="card">
+            <h3>Families Served</h3>
+            <p class="number">{{ served_count }}</p>
+        </div>
+
+        <div class="card">
+            <h3>Total People Affected</h3>
+            <p class="number">{{ total_people }}</p>
+        </div>
+
+        <div class="card">
+            <h3>Total Shelters</h3>
+            <p class="number">{{ shelters | length }}</p>
+        </div>
+
+        <div class="card">
+            <h3>Inventory Items</h3>
+            <p class="number">{{ inventory | length }}</p>
+        </div>
+
+        <div class="card">
+            <h3>Total Distributions</h3>
+            <p class="number">{{ history | length }}</p>
+        </div>
+    </section>
+
+    <section class="card">
+        <h3>Families by District</h3>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>District</th>
+                        <th>Number of Families</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for district, count in by_district %}
+                    <tr>
+                        <td>{{ district }}</td>
+                        <td>{{ count }}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="2">No district data available.</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="card">
+        <h3>Families by Damage Level</h3>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Damage Level</th>
+                        <th>Number of Families</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for damage, count in by_damage %}
+                    <tr>
+                        <td>{{ damage }}</td>
+                        <td>{{ count }}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="2">No damage data available.</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="card">
+        <h3>Inventory Summary</h3>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th>Quantity</th>
+                        <th>Unit</th>
+                        <th>Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for item in inventory %}
+                    <tr>
+                        <td>{{ item.itemName }}</td>
+                        <td>{{ item.quantity }}</td>
+                        <td>{{ item.unit }}</td>
+                        <td>
+                            {% if item.quantity <= item.minimumStock %}
+                                Low Stock
+                            {% else %}
+                                Available
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4">No inventory records available.</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <section class="card">
+        <h3>Relief Distribution History</h3>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Date</th>
+                        <th>Family</th>
+                        <th>Package</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for record in history %}
+                    <tr>
+                        <td>{{ record.distributionId }}</td>
+                        <td>{{ record.date }}</td>
+                        <td>{{ record.familyId }} - {{ record.headName }}</td>
+                        <td>{{ record.package }}</td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="4">No distribution history available.</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+</main>
+</body>
+</html>

@@ -1,0 +1,93 @@
+[
+  {
+    "itemId": "I001",
+    "itemName": "Rice",
+    "quantity": 35,
+    "unit": "kg",
+    "minimumStock": 100
+  },
+  {
+    "itemId": "I002",
+    "itemName": "Water",
+    "quantity": 1164,
+    "unit": "bottle",
+    "minimumStock": 300
+  },
+  {
+    "itemId": "I003",
+    "itemName": "Blanket",
+    "quantity": 143,
+    "unit": "piece",
+    "minimumStock": 50
+  },
+  {
+    "itemId": "I004",
+    "itemName": "Medicine",
+    "quantity": 77,
+    "unit": "box",
+    "minimumStock": 100
+  },
+  {
+    "itemId": "I005",
+    "itemName": "Baby Food",
+    "quantity": 57,
+    "unit": "packet",
+    "minimumStock": 50
+  },
+  {
+    "itemId": "I006",
+    "itemName": "Clothes",
+    "quantity": 250,
+    "unit": "set",
+    "minimumStock": 75
+  },
+  {
+    "itemId": "I007",
+    "itemName": "Hygiene Kit",
+    "quantity": 88,
+    "unit": "kit",
+    "minimumStock": 100
+  },
+  {
+    "itemId": "I008",
+    "itemName": "Mosquito Net",
+    "quantity": 40,
+    "unit": "piece",
+    "minimumStock": 50
+  },
+  {
+    "itemId": "I009",
+    "itemName": "Cooking Oil",
+    "quantity": 180,
+    "unit": "liter",
+    "minimumStock": 60
+  },
+  {
+    "itemId": "I010",
+    "itemName": "Dry Food",
+    "quantity": 130,
+    "unit": "packet",
+    "minimumStock": 75
+  },
+  {
+    "itemId": "I011",
+    "itemName": "Tent",
+    "quantity": 25,
+    "unit": "piece",
+    "minimumStock": 20
+  },
+  {
+    "itemId": "I012",
+    "itemName": "Torch Light",
+    "quantity": 50,
+    "unit": "piece",
+    "minimumStock": 50
+  },
+  {
+    "itemId": "I111",
+    "itemName": "Meat",
+    "quantity": 20,
+    "unit": "kg",
+    "minimumStock": 10
+  }
+]
